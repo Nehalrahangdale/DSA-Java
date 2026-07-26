@@ -8,9 +8,10 @@ class Solution {
 
         char[][] board = new char[n][n];
 
-        // Initialize board with '.'
         for (int i = 0; i < n; i++) {
-            Arrays.fill(board[i], '.');
+            for (int j = 0; j < n; j++) {
+                board[i][j] = '.';
+            }
         }
 
         nQueen(board, 0, ans);
@@ -18,56 +19,56 @@ class Solution {
         return ans;
     }
 
-    // Backtracking function
-    private void nQueen(char[][] board, int row, List<List<String>> ans) {
+    public void nQueen(char[][] board, int row, List<List<String>> ans) {
 
-        // Base case
+        // Base Case
         if (row == board.length) {
             ans.add(construct(board));
             return;
         }
 
-        // Try placing queen in every column
-        for (int col = 0; col < board.length; col++) {
+        // Column Loop
+        for (int j = 0; j < board.length; j++) {
 
-            if (isSafe(board, row, col)) {
+            if (isSafe(board, row, j)) {
 
-                board[row][col] = 'Q';
+                board[row][j] = 'Q';
 
                 nQueen(board, row + 1, ans);
 
                 // Backtracking
-                board[row][col] = '.';
+                board[row][j] = '.';
             }
         }
     }
 
-    // Check if queen can be placed
-    private boolean isSafe(char[][] board, int row, int col) {
+    public boolean isSafe(char[][] board, int row, int col) {
 
         // Vertical Up
         for (int i = row - 1; i >= 0; i--) {
-            if (board[i][col] == 'Q')
+            if (board[i][col] == 'Q') {
                 return false;
+            }
         }
 
         // Left Diagonal
         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-            if (board[i][j] == 'Q')
+            if (board[i][j] == 'Q') {
                 return false;
+            }
         }
 
         // Right Diagonal
         for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
-            if (board[i][j] == 'Q')
+            if (board[i][j] == 'Q') {
                 return false;
+            }
         }
 
         return true;
     }
 
-    // Convert board into List<String>
-    private List<String> construct(char[][] board) {
+    public List<String> construct(char[][] board) {
 
         List<String> temp = new ArrayList<>();
 
